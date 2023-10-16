@@ -186,3 +186,27 @@ footer nav ul {
 	margin: 2em
 }
 
+.select {
+	display: flex;
+	flex-direction: row;
+	justify-content: center;
+	margin: 50px 0;
+	gap: 10px;
+}
+
+.select--btn {
+	padding: 10px 10px;
+	border-radius: 60px;
+	border: 1px solid #1D6154;
+	color: #1D6154;
+	background: white;
+	font-size: 18px;
+	font-weight: 700;
+	min-width: 100px;
+}
+
+.select--btn:hover {
+	background: #1D6154;
+	color: white;
+	cursor: pointer;
+}
