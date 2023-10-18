@@ -22,10 +22,10 @@ function renderData(data) {
   });
 }
 
-const allEl = document.getElementById("All");
-const objEl = document.getElementById("Obj");
-const appartEl = document.getElementById("Appart");
-const hotRestauEl = document.getElementById("HotRestau");
+const allEl = document.getElementById("all");
+const objEl = document.getElementById("obj");
+const appartEl = document.getElementById("appart");
+const hotRestauEl = document.getElementById("hot-restau");
 
 allEl.addEventListener('click', () => {
   renderData(data); 
@@ -47,4 +47,6 @@ hotRestauEl.addEventListener('click', () => {
 });
 
 fetchData(); 
+
+
 
