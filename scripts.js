@@ -48,5 +48,24 @@ hotRestauEl.addEventListener('click', () => {
 
 fetchData(); 
 
+// Modal1 - Fermeture & Ouverture
+const modalContainer = document.querySelector(".modal-container");
+const modalTriggers = document.querySelectorAll(".modal-trigger");
+const openModal = document.getElementById("open-modal");
+
+modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+
+function toggleModal() {
+  modalContainer.style.display = "none";
+}
+
+openModal.addEventListener("click", function(){
+  modalContainer.style.display = "block"
+})
+
+// Ajouter Dynamiquement les photos dans la modale 
+
+
+
 
 

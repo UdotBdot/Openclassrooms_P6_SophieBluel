@@ -40,7 +40,7 @@
 	<section id="portfolio">
 		<div class="edit-position">
 			<h2>Mes Projets</h2>
-			<button class="edit"><i class="fa-solid fa-pen-to-square"></i>Modifier</button>
+			<button class="edit" id="open-modal"><i class="fa-solid fa-pen-to-square"></i>Modifier</button>
 		</div>
 		<div class="select">
 			<button class="select--btn" id="all">Tous</button>
@@ -73,28 +73,29 @@
 		</ul>
 	</nav>
 </footer>
-<aside class="modal-container" >
+<aside class="modal-container">
+
 	<div class="overlay modal-trigger"></div>
+
 	<div class="modal1">
+
 		<button class="close-modal modal-trigger"><i class="fa-solid fa-xmark"></i></button>
 		<h3>Galerie Photo</h3>
 		<div class="img-container">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
-			<img src="assets/images/abajour-tahina.png">
+
+			<div class="delete">
+				<img src="assets/images/abajour-tahina.png">
+				<i class="fa-solid fa-trash-can"></i>
+			</div>
+
+
 		</div>
-		<div class="grey-bar"></div>
-		<button class="addpic-btn">Ajouter une Photo</button>
+		<div class="grey-bar">
+			<button class="addpic-btn">Ajouter une Photo</button>
+		</div>
+
 	</div>
+
 </aside>
 
 <script src="scripts.js"></script>
