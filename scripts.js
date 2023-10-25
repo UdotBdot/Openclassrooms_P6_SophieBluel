@@ -4,12 +4,13 @@ let data = [];
 
 async function fetchData() {
   const response = await fetch(apiUrl);
-  data = await response.json(); 
+  data = await response.json();
   renderData(data);
+  createGallery(data);
 }
 
 function renderData(data) {
-  galleryEl.innerHTML = ""; 
+  galleryEl.innerHTML = "";
   data.forEach(item => {
     const newFigure = document.createElement("figure");
     const newImg = document.createElement("img");
@@ -28,7 +29,7 @@ const appartEl = document.getElementById("appart");
 const hotRestauEl = document.getElementById("hot-restau");
 
 allEl.addEventListener('click', () => {
-  renderData(data); 
+  renderData(data);
 });
 
 objEl.addEventListener('click', () => {
@@ -46,7 +47,7 @@ hotRestauEl.addEventListener('click', () => {
   renderData(filteredData);
 });
 
-fetchData(); 
+fetchData();
 
 // Modal1 - Fermeture & Ouverture
 const modalContainer = document.querySelector(".modal-container");
@@ -59,13 +60,37 @@ function toggleModal() {
   modalContainer.style.display = "none";
 }
 
-openModal.addEventListener("click", function(){
+openModal.addEventListener("click", function () {
   modalContainer.style.display = "block"
 })
 
 // Ajouter Dynamiquement les photos dans la modale 
+const createGallery = (data) => {
+  const modalGallery = document.querySelector(".modal-gallery");
+  data.forEach((items) => {
+    modalGallery.insertAdjacentHTML('beforeend', `
+  <figure>
+  <div class="trash" id="${items.id}">
+    <i class="fa-solid fa-trash-can" id="${items.id}"></i>
+  </div>
+  <img src="${items.imageUrl}" alt="">
+</figure>
+  `)
+  })
+}
 
-
-
-
+const tokenSession = sessionStorage.getItem("Token");
+const refreshPageAdmin = (tokenSession) => {
+  if(tokenSession !== null) {
+    const editEl = document.querySelector(".edit")
+    editEl.style.display = "block"
+    const loginEl = document.getElementById("login")
+    loginEl.innerHTML = "logout";
+    loginEl.addEventListener("click", () => {
+      sessionStorage.removeItem("Token");
+      loginEl.href = "index.html";
+    });
+  }
+  }
+refreshPageAdmin(tokenSession);
 

@@ -291,6 +291,7 @@ li a {
 	justify-content: center;
 }
 .edit {
+	display: none;
 	font-family: Work Sans;
 	font-size: 14px;
 	border: none;
@@ -306,6 +307,7 @@ li a {
 }
 
 .modal-container {
+	display: none;
 	text-align: center;
 	position: fixed;
 	top: 40%;
@@ -336,13 +338,7 @@ li a {
 .modal1 img {
 	width: 75px;
 	height: 100px;
-	margin-bottom: 10px;
-}
-
-.img-container {
-	display: grid;
-	justify-content: center;
-	grid-template-columns: 80px 80px 80px 80px 80px;
+	margin-bottom: 20px;
 }
 
 .modal1 h3 {
@@ -380,14 +376,22 @@ li a {
 	margin: 40px 0 40px 125px;
 }
 
-.delete {
+.modal-gallery {
 	display: grid;
-	grid-template-columns: 20% 20% 20% 20% 20%;
-	grid-template-rows: 20% 20% 20% 20% 20%;
+	grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
+	padding: 0 90px;
 }
 
-.delete i.fa-trash-can {
-	grid-column-start: 4;
-	margin-top: 5px;
-	margin-left: 10px;
+.trash {
+	position: relative;
+}
+
+.fa-trash-can {
+	position: absolute;
+    top: 5px;
+    right: 13px;
+	background: black;
+	color: white;
+	padding: 5px;
+	border-radius: 2px;
 }
