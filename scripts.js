@@ -1,14 +1,21 @@
+// Constante pour l'URL de l'API
 const apiUrl = "http://localhost:5678/api/works";
 const galleryEl = document.querySelector(".gallery");
 let data = [];
 
+// Fonction asynchrone pour récupérer les données depuis l'API
 async function fetchData() {
-  const response = await fetch(apiUrl);
-  data = await response.json();
-  renderData(data);
-  createGallery(data);
+  try {
+    const response = await fetch(apiUrl);
+    data = await response.json();
+    renderData(data);
+    createGallery(data);
+  } catch (error) {
+    console.error("Erreur lors de la récupération des données : ", error);
+  }
 }
 
+// Fonction pour afficher les données dans la galerie
 function renderData(data) {
   galleryEl.innerHTML = "";
   data.forEach(item => {
@@ -23,6 +30,7 @@ function renderData(data) {
   });
 }
 
+// Écouteurs d'événements pour les filtres de la galerie
 const allEl = document.getElementById("all");
 const objEl = document.getElementById("obj");
 const appartEl = document.getElementById("appart");
@@ -47,50 +55,56 @@ hotRestauEl.addEventListener('click', () => {
   renderData(filteredData);
 });
 
-fetchData();
+// Écouteur d'événement pour le chargement du document
+document.addEventListener("DOMContentLoaded", () => {
+  fetchData();
+});
 
-// Modal1 - Fermeture & Ouverture
+// Modale - Ouverture et Fermeture
 const modalContainer = document.querySelector(".modal-container");
 const modalTriggers = document.querySelectorAll(".modal-trigger");
 const openModal = document.getElementById("open-modal");
 
-modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
+modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal));
 
 function toggleModal() {
-  modalContainer.style.display = "none";
+  modalContainer.style.display = "none"; // Fermer la modale
 }
 
 openModal.addEventListener("click", function () {
-  modalContainer.style.display = "block"
-})
+  modalContainer.style.display = "block"; // Ouvrir la modale
+});
 
-// Ajouter Dynamiquement les photos dans la modale 
-const createGallery = (data) => {
+// Ajout dynamique des photos dans la modale
+function createGallery(data) {
   const modalGallery = document.querySelector(".modal-gallery");
-  data.forEach((items) => {
-    modalGallery.insertAdjacentHTML('beforeend', `
-  <figure>
-  <div class="trash" id="${items.id}">
-    <i class="fa-solid fa-trash-can" id="${items.id}"></i>
-  </div>
-  <img src="${items.imageUrl}" alt="">
-</figure>
-  `)
-  })
+  modalGallery.innerHTML = ""; // Effacer le contenu existant
+
+  data.forEach((item) => {
+    const figure = document.createElement("figure");
+    figure.innerHTML = `
+      <div class="trash" id="${item.id}">
+        <i class="fa-solid fa-trash-can" id="${item.id}"></i>
+      </div>
+      <img src="${item.imageUrl}" alt="">
+    `;
+    modalGallery.appendChild(figure);
+  });
 }
 
+// Gestion de la session utilisateur
 const tokenSession = sessionStorage.getItem("Token");
 const refreshPageAdmin = (tokenSession) => {
-  if(tokenSession !== null) {
-    const editEl = document.querySelector(".edit")
-    editEl.style.display = "block"
-    const loginEl = document.getElementById("login")
+  if (tokenSession !== null) {
+    const editEl = document.querySelector(".edit");
+    editEl.style.display = "block";
+    const loginEl = document.getElementById("login");
     loginEl.innerHTML = "logout";
     loginEl.addEventListener("click", () => {
       sessionStorage.removeItem("Token");
-      loginEl.href = "index.html";
+      window.location.href = "index.html"; // Redirection vers la page d'accueil après la déconnexion
     });
   }
-  }
-refreshPageAdmin(tokenSession);
+};
 
+refreshPageAdmin(tokenSession);

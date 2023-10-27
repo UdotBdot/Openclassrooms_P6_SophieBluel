@@ -1,41 +1,57 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
+    <!-- Section En-tête (head) du document -->
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Liens vers les polices Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Syne:wght@700;800&family=Work+Sans&display=swap" rel="stylesheet">
+    <!-- Lien vers la feuille de style CSS -->
     <link rel="stylesheet" href="./assets/style.css">
     <title>Login Page</title>
 </head>
 <body>
+    <!-- Section Corps (body) du document -->
+    <!-- En-tête (header) de la page -->
     <header>
+        <!-- Contenu de l'en-tête -->
         <h1>Sophie Bluel <span>Architecte d'intérieur</span></h1>
         <nav>
             <ul>
+                <!-- Liens de navigation -->
                 <a href="index.html" style="text-decoration: none; color: black;"><li>projets</li></a>
                 <li>contact</li>
                 <li class="bold">login</li>
+                <!-- Icône Instagram -->
                 <li><img src="./assets/icons/instagram.png" alt="Instagram"></li>
             </ul>
         </nav>
     </header>
+    <!-- Contenu principal (main) de la page -->
     <main>
+        <!-- Section de login -->
         <section id="login">
+            <!-- Titre de la section -->
             <h2 class="Login-h2">Log In</h2>
+            <!-- Messages de validation et d'erreur -->
             <p class="validate"></p>
             <p class="erreur"></p>
             <form>
                 <label for="email-login">Email</label>
+                <!-- Champ pour l'adresse e-mail -->
                 <input type="email" name="email" id="email-login" autocomplete="email">
                 <label for="password">Password</label>
+                <!-- Champ pour le mot de passe -->
                 <input type="password" name="password" id="password">
+                <!-- Bouton de soumission du formulaire de connexion -->
                 <input type="submit" value="Se connecter">
             </form>
             <a href="">Mot de passe oublié</a>
         </section>
     </main>
+    <!-- Pied de page (footer) -->
     <footer>
         <nav>
             <ul>
@@ -43,6 +59,7 @@
             </ul>
         </nav>
     </footer>
+    <!-- Lien vers le fichier JavaScript pour la page de connexion -->
     <script src="login.js"></script>
 </body>
 </html>
