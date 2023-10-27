@@ -50,11 +50,7 @@ L'objectif étant de créer un site dynamique avec JavaScript
 
 > email: sophie.bluel@test.tld
 
-<<<<<<< HEAD
 > password: S0phie (Ceci est ZERO pas un O MAJUSCULE)
-=======
-> password: S0phie
->>>>>>> 7ed155fe1b731881d99ad7388314c63bd5003919
 
 ## Info
 
