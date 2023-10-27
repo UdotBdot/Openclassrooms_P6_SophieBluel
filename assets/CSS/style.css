@@ -132,7 +132,7 @@ li:hover {
 /* Styles pour la section du portfolio */
 #portfolio h2 {
     text-align: center;
-	margin: 3em 0;
+	margin: 3em 0 2em 0;
 }
 
 .gallery {
@@ -150,7 +150,7 @@ li:hover {
 /* Styles pour la section de contact */
 #contact {
     width: 50%;
-    margin: 7em auto;
+    margin: 5em auto;
 }
 
 #contact > * {
