@@ -90,6 +90,13 @@ function createGallery(data) {
     `;
     modalGallery.appendChild(figure);
   });
+  const trashIcons = document.querySelectorAll(".trash");
+  trashIcons.forEach(trashIcon => {
+  trashIcon.addEventListener("click", () => {
+    console.log("J'ai cliqué");
+     // Ajoutez ici le code à la place du console.log pour supprimer l'élément associé à l'icône trash.
+  });
+});
 }
 
 // Gestion de la session utilisateur
@@ -108,3 +115,7 @@ const refreshPageAdmin = (tokenSession) => {
 };
 
 refreshPageAdmin(tokenSession);
+
+
+
+
