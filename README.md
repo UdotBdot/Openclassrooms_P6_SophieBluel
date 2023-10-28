@@ -71,9 +71,3 @@ L'objectif étant de créer un site dynamique avec JavaScript
 > la page de connexion de l'administrateur du site
 
 > la modale permettant d'uploader de nouveaux médias
-
-<<<<<<< HEAD
-&nbsp;
-=======
-&nbsp;
->>>>>>> 7ed155fe1b731881d99ad7388314c63bd5003919
