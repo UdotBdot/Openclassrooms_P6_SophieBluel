@@ -132,7 +132,7 @@ li:hover {
 /* Styles pour la section du portfolio */
 #portfolio h2 {
     text-align: center;
-	margin: 3em 0 2em 0;
+	margin: 2em 0 2em 0;
 }
 
 .gallery {
@@ -340,6 +340,7 @@ li a {
 }
 
 .overlay {
+    display: none;
     position: fixed;
     top: 0;
     left: 0;
@@ -348,7 +349,7 @@ li a {
     background: #333333d3;
 }
 
-.modal1 {
+.modal {
     position: fixed;
     top: 60px;
     left: 30%;
@@ -358,13 +359,13 @@ li a {
     overflow: auto;
 }
 
-.modal1 img {
+.modal img {
     width: 75px;
     height: 100px;
     margin-bottom: 20px;
 }
 
-.modal1 h3 {
+.modal h3 {
     font-family: 'Work Sans';
     font-weight: 700;
     font-size: 26px;
@@ -382,7 +383,7 @@ li a {
     cursor: pointer;
 }
 
-.addpic-btn {
+.addpic-btn-modal1 {
     font-family: 'Syne';
     font-weight: 700;
     color: white;
@@ -417,4 +418,157 @@ li a {
     color: white;
     padding: 5px;
     border-radius: 2px;
+}
+/* Modale 2 */
+
+.modal-container2 {
+    text-align: center;
+    position: fixed;
+    top: 40%;
+    left: 50%;
+    width: 100vw;
+    height: 100vh;
+}
+
+.modal2 {
+    display: none;
+    position: fixed;
+    top: 60px;
+    left: 30%;
+    width: 630px;
+    background: white;
+    max-height: 90%;
+    overflow: auto;
+    text-align: center;
+}
+
+.modal-form-header {
+    display: flex;
+    justify-content: space-between;
+}
+
+.previous-modal {
+    position: absolute;
+    top: 23px;
+    left: 6px;
+    background: white;
+    border: none;
+    cursor: pointer;
+}
+
+.x-icon-modal2 {
+    position: absolute;
+    top: -5px;
+    right: 6px;
+}
+
+.modal2 h3 {
+    padding: 15px;
+    font-family: 'Work Sans';
+    font-weight: 700;
+    font-size: 26px;
+    color: black;
+    margin: 20px 0 30px 0;
+}
+
+.form-img {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background:#E8F1F6;
+    height: 180px;
+    max-width: 420px;
+    width: 60%;
+    margin: auto;
+}
+
+.label-img i {
+    display: block;
+    margin: 20px 0 40px 0;
+    font-size: 70px;
+    font-weight: 100;
+    color: #b9c5cc;
+}
+
+.addpic-btn {
+    margin: 5px auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px #cbd6dc solid;
+    background: #cbd6dc;
+    color: #306685;
+    border-radius: 50px;
+    width: 175px;
+    height: 36px;
+    font-family: "Syne", sans-serif;
+    font-weight: 500;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.label-img i {
+    display: block;
+    margin: 20px 0 40px 0;
+    font-size: 70px;
+    font-weight: 100;
+    color: #b9c5cc;
+  }
+
+  .label-img img {
+    position: absolute;
+    right: 40%;
+    top: 17.5%;
+    height: 180px;
+   
+  }
+  
+  .span-txt {
+    font-size: 13px;
+  }
+  
+  .form-img input {
+    display: none;
+  }
+  
+  .form-options {
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+    margin: auto;
+    max-width: 420px;
+    width: 60%;
+    padding-bottom: 40px;
+  }
+  
+  .form-title,
+  .form-categories {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .form-title label,
+  .form-categories label {
+    font-family: "Work Sans";
+    font-weight: 500;
+    font-size: 14px;
+    line-height: 16px;
+    color: #3d3d3d;
+    margin: 5px 0;
+  }
+  
+  .form-title input,
+  .form-categories select {
+    height: 51px;
+    background: #ffffff;
+    border: transparent;
+    box-shadow: 0px 4px 14px rgba(0, 0, 0, 0.09);
+  }
+  
+#button-form {
+    width: 237px;
+    height: 36px;
+    border-radius: 36px;
+    background: #A7A7A7;
+    border: none;
 }
