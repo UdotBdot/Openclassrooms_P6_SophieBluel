@@ -109,11 +109,11 @@ function refreshPageAdmin(token) {
   if (token !== null) {
     const editEl = document.querySelector(".edit");
     editEl.style.display = "block";
-    const loginEl = document.getElementById("login");
+    const loginEl = document.querySelector(".bold");
     loginEl.innerHTML = "logout";
     loginEl.addEventListener("click", () => {
       sessionStorage.removeItem("Token");
-      window.location.href = "/index.html";
+      window.location.href = "index.html";
     });
   }
 }
