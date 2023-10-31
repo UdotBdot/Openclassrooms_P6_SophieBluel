@@ -83,12 +83,17 @@ function createGallery(data) {
   });
 }
 
+function resetImageInput() {
+  photoInput.value = ''; // Réinitialise l'input
+}
+
 // Fonction pour masquer la modale
 function toggleModal() {
   modalContainer.style.display = "none";
   overlay.style.display = "none";
   modal2.style.display = "none";
   resetModal2();
+  resetImageInput();
 }
 
 // Ajout des écouteurs d'événements pour ouvrir et fermer la modale
@@ -130,6 +135,7 @@ previousModalIcon.addEventListener("click", () => {
   modalContainer.style.display = "block";
   modal2.style.display ="none";
   resetModal2();
+  resetImageInput()
 });
 
 // Écouteur d'événement pour le changement de la photo sélectionnée
@@ -153,10 +159,7 @@ photoInput.addEventListener('change', function() {
   }
 });
 
-// Réinitialisation de la deuxième modale
-document.addEventListener('DOMContentLoaded', function() {
-  labelImg.defaultContent = labelImg.innerHTML;
-});
+labelImg.defaultContent = labelImg.innerHTML;
 
 // Fonction pour réinitialiser la deuxième modale
 function resetModal2() {
@@ -186,7 +189,5 @@ titleInput.addEventListener('input', changeBtnColor);
 optionsSelect.addEventListener('change', changeBtnColor);
 photoInput.addEventListener('change', changeBtnColor);
 
-// Événement de chargement de la page pour initialiser le contenu
-document.addEventListener("DOMContentLoaded", () => {
-  fetchData();
-});
+fetchData();
+
