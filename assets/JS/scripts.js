@@ -191,17 +191,18 @@ function resetModal2() {
   labelImg.innerHTML = defaultContent;
   titleInput.value = "";
   optionsSelect.value = "";
+
+  btnModal2.style.background = "#A7A7A7";
 }
 
 // Changer la couleur du bouton 
 const titleInput = document.querySelector(".form-title input");
 const optionsSelect = document.querySelector(".form-options select");
-const imgWorks = document.getElementById("photo");
 const btnModal2 = document.getElementById("button-form")
 
 // Fonction pour vérifier et changer la couleur du bouton
 function changeBtnColor() {
-  if (titleInput.value !== "" && optionsSelect.value !== "" && imgWorks.files.length > 0) {
+  if (titleInput.value !== "" && optionsSelect.value !== "" && photoInput.files.length > 0) {
     btnModal2.style.background = "#1D6154";
   } else {
     btnModal2.style.background = "#A7A7A7"; // Réinitialise la couleur du bouton
@@ -210,6 +211,6 @@ function changeBtnColor() {
 // Ajout d'écouteurs d'événements pour les changements dans les champs du formulaire
 titleInput.addEventListener('input', changeBtnColor);
 optionsSelect.addEventListener('change', changeBtnColor);
-imgWorks.addEventListener('change', changeBtnColor);
+photoInput.addEventListener('change', changeBtnColor);
 
 // Ajout des photos dans la page d'accueil 
