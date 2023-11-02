@@ -1,6 +1,8 @@
 // Déclaration des constantes et variables pour les éléments DOM et les données
 const apiUrl = "http://localhost:5678/api/works";
 const galleryEl = document.querySelector(".gallery");
+const galleryModal = document.querySelector(".modal-gallery")
+const editHeaderBtn = document.querySelector(".edit-header-btn")
 const modalContainer = document.querySelector(".modal-container");
 const modalTriggers = document.querySelectorAll(".modal-trigger");
 const overlay = document.querySelector(".overlay");
@@ -66,21 +68,43 @@ function createGallery(data) {
     const figure = document.createElement("figure");
     figure.innerHTML = `
       <div class="trash" id="${item.id}">
-        <i class="fa-solid fa-trash-can" id="${item.id}"></i>
+        <i class="fa-solid fa-trash-can"></i>
       </div>
       <img src="${item.imageUrl}" alt="">
     `;
     modalGallery.appendChild(figure);
-  });
-
-  const trashIcons = document.querySelectorAll(".trash");
-  trashIcons.forEach(trashIcon => {
-    trashIcon.addEventListener("click", () => {
-      // Action à effectuer lors du clic sur l'icône de suppression
-      console.log("J'ai cliqué");
-      // Ajouter ici le code pour supprimer l'élément associé à l'icône trash.
+    const trashIcon = figure.querySelector(".trash");
+    trashIcon.addEventListener("click", async () => {
+      deleteItem(item.id);
     });
   });
+
+
+// Supprimer les photos dans la modale
+async function deleteItem(id) {
+  try {
+    const response = await fetch(`http://localhost:5678/api/works/${id}`, {
+      method: "DELETE",
+      headers: {
+        "Authorization": "Bearer " + tokenSession, // Make sure tokenSession is defined
+      },
+    });
+
+  console.log(response)
+
+    if (response.status === 200 || response.status === 204) {
+      // Traitement à effectuer en cas de succès (status 200 OK)
+      console.log("Suppression réussie.");
+      fetchData(); // Re-fetch data after deletion
+    } else {
+      // Traitement en cas d'échec (autre status)
+      console.error("Échec de la suppression.");
+    }
+  } catch (error) {
+    console.error("Une erreur s'est produite :", error);
+  }
+}
+
 }
 
 function resetImageInput() {
@@ -101,7 +125,12 @@ modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 openModal.addEventListener("click", () => {
   modalContainer.style.display = "block";
   overlay.style.display = "block";
-});
+}
+);
+editHeaderBtn.addEventListener("click", () => {
+  modalContainer.style.display = "block";
+  overlay.style.display = "block";
+})
 
 // Écouteurs d'événements pour les filtres de la galerie principale
 allEl.addEventListener('click', () => renderData(data));
@@ -114,6 +143,8 @@ function refreshPageAdmin(token) {
   if (token !== null) {
     const editEl = document.querySelector(".edit");
     editEl.style.display = "block";
+    const adminHeader = document.querySelector(".admin-header");
+  adminHeader.style.display = "block";
     const loginEl = document.querySelector(".bold");
     loginEl.innerHTML = "logout";
     loginEl.addEventListener("click", () => {
@@ -190,4 +221,75 @@ optionsSelect.addEventListener('change', changeBtnColor);
 photoInput.addEventListener('change', changeBtnColor);
 
 fetchData();
+
+// Fonction pour envoyer la requête POST pour ajouter un projet
+const addWorks = async () => {
+  const formData = new FormData();
+  formData.append("image", photoInput.files[0]);
+  formData.append("title", titleInput.value);
+  formData.append("category", optionsSelect.value);
+
+  try {
+    const response = await fetch(apiUrl, {
+      method: "POST",
+      headers: {
+        Authorization: `Bearer ${tokenSession}`,
+      },
+      body: formData,
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      // Faire quelque chose après l'ajout réussi du projet, si nécessaire
+      console.log("Projet ajouté avec succès :", data);
+
+      // Ajouter l'image dans la galerie principale de la première modal
+      const newFigure = document.createElement("figure");
+      const newImg = document.createElement("img");
+      newImg.src = data.imageUrl;
+      const newFigCaption = document.createElement("figcaption");
+      newFigCaption.textContent = data.title;
+
+      newFigure.appendChild(newImg);
+      galleryModal.appendChild(newFigure);
+      newFigure.appendChild(newFigCaption);
+      galleryEl.appendChild(newFigure);
+      
+
+      // Si besoin, actualiser également la page d'accueil avec le nouvel élément
+      // Par exemple, en appelant une fonction qui met à jour la galerie sur la page d'accueil
+      // updateHomePageGallery(data);
+    } else if (response.status === 401) {
+      console.error("Non autorisé à ajouter un projet");
+      // Redirection vers la page de connexion, suppression du token, etc.
+      sessionStorage.removeItem("Token");
+      window.location.href = "login.html";
+    } else {
+      // Gérer d'autres réponses d'erreur si nécessaire
+      throw new Error(`Réponse HTTP inattendue : ${response.status}`);
+    }
+  } catch (error) {
+    console.error("Une erreur s'est produite :", error);
+    // Gérer l'erreur, afficher un message à l'utilisateur, etc.
+  }
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+  const modalForm = document.getElementById('js-modal-form');
+
+  modalForm.addEventListener('submit', function(event) {
+      event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+      // Récupérer les valeurs des champs du formulaire
+      const title = document.getElementById('titre').value;
+      const category = document.getElementById('categorie').value;
+      const photo = document.getElementById('photo').files[0]; // La première photo sélectionnée
+
+      // Ici, vous pouvez appeler une fonction pour traiter l'ajout du projet avec les valeurs récupérées
+      addWorks(title, category, photo);
+  });
+});
+
+
+
 
