@@ -9,25 +9,25 @@
 ////////////////////////////////////////////////////
 
 // Définition des éléments HTML et des variables nécessaires à l'application
-const apiUrl = "http://localhost:5678/api/works"; // URL de l'API pour les travaux
+const worksApiUrl  = "http://localhost:5678/api/works"; // URL de l'API pour les travaux
 const galleryEl = document.querySelector(".gallery"); // Élément contenant la galerie d'images
 const galleryModal = document.querySelector(".modal-gallery"); // Élément modal pour la galerie
-const editHeaderBtn = document.querySelector(".edit-header-btn"); // Bouton d'édition dans l'en-tête
+const editButton = document.querySelector(".edit-btn"); // Bouton d'édition dans l'en-tête
 const modalContainer = document.querySelector(".modal-container"); // Conteneur principal du modal
 const modalTriggers = document.querySelectorAll(".modal-trigger"); // Déclencheurs du modal
-const overlay = document.querySelector(".overlay"); // Superposition pour le modal
+const overlayEl = document.querySelector(".overlay"); // Superposition pour le modal
 const openModal = document.getElementById("open-modal"); // Bouton pour ouvrir le modal
-const allEl = document.getElementById("all"); // Élément pour afficher tous les travaux
-const objEl = document.getElementById("obj"); // Élément pour afficher les travaux de type "Objets"
-const appartEl = document.getElementById("appart"); // Élément pour afficher les travaux de type "Appartements"
-const hotRestauEl = document.getElementById("hot-restau"); // Élément pour afficher les travaux de type "Hotels & restaurants"
-const addPictureBtnModal1 = document.querySelector(".addpic-btn-modal1"); // Bouton pour ajouter une image dans le modal 1
+const filterAllWorks = document.getElementById("filter-all-works"); // Élément pour afficher tous les travaux
+const filterObjectsWorks = document.getElementById("filter-object-works"); // Élément pour afficher les travaux de type "Objets"
+const filterFlatWorks = document.getElementById("filter-flat-works"); // Élément pour afficher les travaux de type "Appartements"
+const filterHotelAndRestaurantWorks = document.getElementById("filter-hotel-restaurant-works"); // Élément pour afficher les travaux de type "Hotels & restaurants"
+const btnModal1 = document.querySelector(".btn-modal1"); // Bouton pour ajouter une image dans le modal 1
 const modal2 = document.querySelector(".modal2"); // Deuxième modal
 const previousModalIcon = document.querySelector(".previous-modal"); // Icône pour revenir dans le modal précédent
 const photoInput = document.getElementById("photo"); // Champ pour télécharger une photo
 const labelImg = document.querySelector('.label-img'); // Élément pour afficher l'image sélectionnée
 const titleInput = document.querySelector(".form-title input"); // Champ de saisie pour le titre
-const optionsSelect = document.querySelector(".form-options select"); // Sélecteur pour les options
+const formOptions = document.querySelector(".form-options select"); // Sélecteur pour les options
 const btnModal2 = document.getElementById("button-form"); // Bouton du formulaire modal 2
 let data = []; // Données des travaux
 const tokenSession = sessionStorage.getItem("Token"); // Récupération du jeton d'authentification depuis la session
@@ -40,7 +40,7 @@ const tokenSession = sessionStorage.getItem("Token"); // Récupération du jeton
 async function fetchData() {
   try {
     // Appel de l'API pour récupérer les données des travaux
-    const response = await fetch(apiUrl);
+    const response = await fetch(worksApiUrl );
     // Extraction des données JSON de la réponse
     data = await response.json();
     // Affichage des données dans la galerie principale
@@ -148,14 +148,14 @@ function createGallery(data) {
 ////////////////////////////////////////////////////
 
 // Fonction asynchrone pour ajouter une œuvre via un formulaire
-const addWorks = async () => {
+const addArtworkViaForm  = async () => {
   // Création d'un objet FormData contenant les données du formulaire
   const formData = new FormData();
   formData.append("image", photoInput.files[0]);
   formData.append("title", titleInput.value);
-  formData.append("category", optionsSelect.value);
+  formData.append("category", formOptions.value);
   try {
-    const response = await fetch(apiUrl, {
+    const response = await fetch(worksApiUrl , {
       method: "POST",
       headers: {
         Authorization: `Bearer ${tokenSession}`,
@@ -221,7 +221,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const title = document.getElementById('titre').value;
     const category = document.getElementById('categorie').value;
     const photo = document.getElementById('photo').files[0];
-    addWorks(title, category, photo); // Appelle la fonction pour ajouter une œuvre avec les données du formulaire
+    addArtworkViaForm (title, category, photo); // Appelle la fonction pour ajouter une œuvre avec les données du formulaire
   });
 });
 
@@ -238,7 +238,7 @@ function resetImageInput() {
 function toggleModal() {
   // Masque le conteneur principal du modal, la superposition et le second modal
   modalContainer.style.display = "none";
-  overlay.style.display = "none";
+  overlayEl.style.display = "none";
   modal2.style.display = "none";
   resetModal2(); // Réinitialise le modal 2
   resetImageInput(); // Réinitialise le champ d'entrée de l'image
@@ -249,21 +249,21 @@ modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal))
 // Écoute le clic sur l'élément "openModal" pour afficher le modal et la superposition
 openModal.addEventListener("click", () => {
   modalContainer.style.display = "block";
-  overlay.style.display = "block";
+  overlayEl.style.display = "block";
 });
 
 // Ajoute un événement de clic sur le bouton d'édition dans l'en-tête
-editHeaderBtn.addEventListener("click", () => {
+editButton.addEventListener("click", () => {
   // Affiche le conteneur principal du modal et la superposition
   modalContainer.style.display = "block";
-  overlay.style.display = "block";
+  overlayEl.style.display = "block";
 });
 
 // Ajoute des écouteurs d'événements de clic pour les différents éléments
-allEl.addEventListener('click', () => renderData(data)); // Affiche tous les travaux
-objEl.addEventListener('click', () => filterData("Objets")); // Filtre les travaux de type "Objets"
-appartEl.addEventListener('click', () => filterData("Appartements")); // Filtre les travaux de type "Appartements"
-hotRestauEl.addEventListener('click', () => filterData("Hotels & restaurants")); // Filtre les travaux de type "Hotels & restaurants"
+filterAllWorks.addEventListener('click', () => renderData(data)); // Affiche tous les travaux
+filterObjectsWorks.addEventListener('click', () => filterData("Objets")); // Filtre les travaux de type "Objets"
+filterFlatWorks.addEventListener('click', () => filterData("Appartements")); // Filtre les travaux de type "Appartements"
+filterHotelAndRestaurantWorks.addEventListener('click', () => filterData("Hotels & restaurants")); // Filtre les travaux de type "Hotels & restaurants"
 
 // Fonction pour rafraîchir la page de l'administrateur
 function refreshPageAdmin(token) {
@@ -288,7 +288,7 @@ function refreshPageAdmin(token) {
 refreshPageAdmin(tokenSession);
 
 // Ajoute un événement de clic pour afficher le modal 2 lorsqu'on clique sur le bouton d'ajout d'image dans le modal 1
-addPictureBtnModal1.addEventListener("click", () => {
+btnModal1.addEventListener("click", () => {
   modal2.style.display = "block";
 });
 
@@ -335,14 +335,14 @@ function resetModal2() {
   }
   labelImg.innerHTML = defaultContent; // Rétablit le contenu par défaut de labelImg
   titleInput.value = ""; // Réinitialise la valeur du champ de titre
-  optionsSelect.value = ""; // Réinitialise la valeur du sélecteur d'options
+  formOptions.value = ""; // Réinitialise la valeur du sélecteur d'options
   changeBtnColor(); // Appelle la fonction pour changer la couleur du bouton
 }
 
 // Fonction pour changer la couleur du bouton en fonction des champs remplis
 function changeBtnColor() {
   // Vérifie si le champ de titre, le sélecteur d'options et le champ d'image sont remplis
-  if (titleInput.value !== "" && optionsSelect.value !== "" && photoInput.files.length > 0) {
+  if (titleInput.value !== "" && formOptions.value !== "" && photoInput.files.length > 0) {
     btnModal2.style.background = "#1D6154"; // Change la couleur du bouton en vert
   } else {
     btnModal2.style.background = "#A7A7A7"; // Change la couleur du bouton en gris
@@ -351,7 +351,7 @@ function changeBtnColor() {
 
 // Ajoute des écouteurs pour déclencher la fonction changeBtnColor lors des changements dans les champs
 titleInput.addEventListener('input', changeBtnColor); // Lorsque du texte est saisi dans le champ de titre
-optionsSelect.addEventListener('change', changeBtnColor); // Lorsque l'option sélectionnée change dans le sélecteur
+formOptions.addEventListener('change', changeBtnColor); // Lorsque l'option sélectionnée change dans le sélecteur
 photoInput.addEventListener('change', changeBtnColor); // Lorsque le fichier d'image est changé
 
 // Appelle la fonction fetchData pour récupérer les données initiales et initialiser l'affichage
