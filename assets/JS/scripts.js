@@ -1,4 +1,3 @@
-// Déclaration des constantes et variables pour les éléments DOM et les données
 const apiUrl = "http://localhost:5678/api/works";
 const galleryEl = document.querySelector(".gallery");
 const galleryModal = document.querySelector(".modal-gallery")
@@ -22,7 +21,6 @@ const btnModal2 = document.getElementById("button-form");
 let data = [];
 const tokenSession = sessionStorage.getItem("Token");
 
-// Fonction asynchrone pour récupérer les données depuis l'API
 async function fetchData() {
   try {
     const response = await fetch(apiUrl);
@@ -34,37 +32,31 @@ async function fetchData() {
   }
 }
 
-// Fonction pour afficher les données dans la galerie principale
 function renderData(data) {
   galleryEl.innerHTML = "";
   data.forEach(item => {
-    // Création des éléments pour chaque élément de données
     const newFigure = document.createElement("figure");
     const newImg = document.createElement("img");
     newImg.src = item.imageUrl;
     const newFigCaption = document.createElement("figcaption");
     newFigCaption.textContent = item.title;
 
-    // Construction de la structure de la galerie principale
     newFigure.appendChild(newImg);
     newFigure.appendChild(newFigCaption);
     galleryEl.appendChild(newFigure);
   });
 }
 
-// Filtrer les données par catégorie
 function filterData(category) {
   const filteredData = data.filter(item => item.category.name === category);
   renderData(filteredData);
 }
 
-// Créer la galerie dans la modale
 function createGallery(data) {
   const modalGallery = document.querySelector(".modal-gallery");
   modalGallery.innerHTML = "";
 
   data.forEach((item) => {
-    // Création des éléments pour la galerie modale
     const figure = document.createElement("figure");
     figure.innerHTML = `
       <div class="trash" id="${item.id}">
@@ -79,39 +71,45 @@ function createGallery(data) {
     });
   });
 
-
-// Supprimer les photos dans la modale
 async function deleteItem(id) {
   try {
     const response = await fetch(`http://localhost:5678/api/works/${id}`, {
       method: "DELETE",
       headers: {
-        "Authorization": "Bearer " + tokenSession, // Make sure tokenSession is defined
+        "Authorization": "Bearer " + tokenSession,
       },
     });
 
-  console.log(response)
+    const modalError = document.querySelector(".modal1-pError");
+    const modalValidate = document.querySelector(".modal1-pValidate");
 
     if (response.status === 200 || response.status === 204) {
-      // Traitement à effectuer en cas de succès (status 200 OK)
+      modalError.style.display = "none";
+      modalValidate.style.display = "block";
+      modalValidate.textContent = "La suppression est réussie.";
       console.log("Suppression réussie.");
-      fetchData(); // Re-fetch data after deletion
+      fetchData(); 
     } else {
-      // Traitement en cas d'échec (autre status)
+      modalValidate.style.display = "none";
+      modalError.style.display = "block";
+      modalError.textContent = "La suppression a échoué.";
       console.error("Échec de la suppression.");
     }
+
+     setTimeout(function() {
+      modalError.style.display = "none";
+      modalValidate.style.display = "none";
+    }, 1500); 
   } catch (error) {
     console.error("Une erreur s'est produite :", error);
   }
 }
-
 }
 
 function resetImageInput() {
-  photoInput.value = ''; // Réinitialise l'input
+  photoInput.value = ''; 
 }
 
-// Fonction pour masquer la modale
 function toggleModal() {
   modalContainer.style.display = "none";
   overlay.style.display = "none";
@@ -120,7 +118,6 @@ function toggleModal() {
   resetImageInput();
 }
 
-// Ajout des écouteurs d'événements pour ouvrir et fermer la modale
 modalTriggers.forEach(trigger => trigger.addEventListener("click", toggleModal));
 openModal.addEventListener("click", () => {
   modalContainer.style.display = "block";
@@ -132,13 +129,11 @@ editHeaderBtn.addEventListener("click", () => {
   overlay.style.display = "block";
 })
 
-// Écouteurs d'événements pour les filtres de la galerie principale
 allEl.addEventListener('click', () => renderData(data));
 objEl.addEventListener('click', () => filterData("Objets"));
 appartEl.addEventListener('click', () => filterData("Appartements"));
 hotRestauEl.addEventListener('click', () => filterData("Hotels & restaurants"));
 
-// Fonction pour rafraîchir la page admin
 function refreshPageAdmin(token) {
   if (token !== null) {
     const editEl = document.querySelector(".edit");
@@ -154,10 +149,8 @@ function refreshPageAdmin(token) {
   }
 }
 
-// Initialisation de la page admin et gestion de la session utilisateur
 refreshPageAdmin(tokenSession);
 
-// Ajout des écouteurs d'événements pour la deuxième modale
 addPictureBtnModal1.addEventListener("click", () => {
   modal2.style.display = "block";
 });
@@ -169,7 +162,6 @@ previousModalIcon.addEventListener("click", () => {
   resetImageInput()
 });
 
-// Écouteur d'événement pour le changement de la photo sélectionnée
 photoInput.addEventListener('change', function() {
   const selectedFile = photoInput.files[0];
   const fileRegex = /\.(jpe?g|png)$/i;
@@ -192,7 +184,6 @@ photoInput.addEventListener('change', function() {
 
 labelImg.defaultContent = labelImg.innerHTML;
 
-// Fonction pour réinitialiser la deuxième modale
 function resetModal2() {
   const defaultContent = labelImg.defaultContent;
   const imageInsideLabelImg = document.querySelector('.label-img img');
@@ -206,7 +197,6 @@ function resetModal2() {
   changeBtnColor();
 }
 
-// Fonction pour changer la couleur du bouton en fonction des champs remplis
 function changeBtnColor() {
   if (titleInput.value !== "" && optionsSelect.value !== "" && photoInput.files.length > 0) {
     btnModal2.style.background = "#1D6154";
@@ -215,14 +205,27 @@ function changeBtnColor() {
   }
 }
 
-// Ajout d'écouteurs d'événements pour les changements dans les champs du formulaire
 titleInput.addEventListener('input', changeBtnColor);
 optionsSelect.addEventListener('change', changeBtnColor);
 photoInput.addEventListener('change', changeBtnColor);
 
 fetchData();
 
-// Fonction pour envoyer la requête POST pour ajouter un projet
+const modal2Error = document.querySelector(".modal2-pError")
+const modal2Validate = document.querySelector(".modal2-pValidate")
+
+modal2Error.style.display = "none";
+modal2Validate.style.display = "none";
+
+// Fonction pour effacer les messages après un délai
+function hideModalMessages() {
+  setTimeout(() => {
+    modal2Error.style.display = "none";
+    modal2Validate.style.display = "none";
+  }, 2000); // 2000 ms = 2 secondes
+}
+
+
 const addWorks = async () => {
   const formData = new FormData();
   formData.append("image", photoInput.files[0]);
@@ -240,10 +243,7 @@ const addWorks = async () => {
 
     if (response.ok) {
       const data = await response.json();
-      // Faire quelque chose après l'ajout réussi du projet, si nécessaire
-      console.log("Projet ajouté avec succès :", data);
 
-      // Ajouter l'image dans la galerie principale de la première modal
       const newFigure = document.createElement("figure");
       const newImg = document.createElement("img");
       newImg.src = data.imageUrl;
@@ -254,41 +254,61 @@ const addWorks = async () => {
       galleryModal.appendChild(newFigure);
       newFigure.appendChild(newFigCaption);
       galleryEl.appendChild(newFigure);
-      
 
-      // Si besoin, actualiser également la page d'accueil avec le nouvel élément
-      // Par exemple, en appelant une fonction qui met à jour la galerie sur la page d'accueil
-      // updateHomePageGallery(data);
+      modal2Error.style.display = "none";
+      modal2Validate.style.display = "block";
+      modal2Validate.textContent = "La photo a été ajoutée";
+
+      // Attente de 2 secondes avant de réinitialiser et fermer la modale
+      setTimeout(() => {
+        resetModal2();
+        resetImageInput();
+        toggleModal();
+        fetchData();
+        hideModalMessages()
+      }, 2000); // 2000 ms = 2 secondes
     } else if (response.status === 401) {
       console.error("Non autorisé à ajouter un projet");
-      // Redirection vers la page de connexion, suppression du token, etc.
       sessionStorage.removeItem("Token");
       window.location.href = "login.html";
+      hideModalMessages() 
     } else {
-      // Gérer d'autres réponses d'erreur si nécessaire
       throw new Error(`Réponse HTTP inattendue : ${response.status}`);
+      hideModalMessages()
     }
   } catch (error) {
     console.error("Une erreur s'est produite :", error);
-    // Gérer l'erreur, afficher un message à l'utilisateur, etc.
+
+    modal2Validate.style.display = "none";
+    modal2Error.style.display = "block";
+    modal2Error.textContent = "Erreur : La photo n'a pas pu être ajoutée.";
+
+    // Attente de 2 secondes avant de réinitialiser et fermer la modale
+    setTimeout(() => {
+      resetModal2();
+      resetImageInput();
+      toggleModal();
+      fetchData();
+      hideModalMessages()
+    }, 2000); // 2000 ms = 2 secondes
   }
 };
+
 
 document.addEventListener('DOMContentLoaded', function() {
   const modalForm = document.getElementById('js-modal-form');
 
   modalForm.addEventListener('submit', function(event) {
-      event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+      event.preventDefault(); 
 
-      // Récupérer les valeurs des champs du formulaire
       const title = document.getElementById('titre').value;
       const category = document.getElementById('categorie').value;
-      const photo = document.getElementById('photo').files[0]; // La première photo sélectionnée
+      const photo = document.getElementById('photo').files[0]; 
 
-      // Ici, vous pouvez appeler une fonction pour traiter l'ajout du projet avec les valeurs récupérées
       addWorks(title, category, photo);
   });
 });
+
 
 
 

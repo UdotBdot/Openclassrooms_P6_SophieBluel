@@ -437,6 +437,28 @@ li a {
     color: #1D6154;
 }
 
+.modal-form {
+    position: relative;
+}
+
+.modal2-pValidate {
+    display: none;
+    position: absolute;
+    font-family: 'Syne';
+    color: #1D6154;
+    bottom: 110px;
+    left: 225px;
+}
+
+.modal2-pError {
+    display: none;
+    position: absolute;
+    font-family: 'Syne';
+    color: red;
+    bottom: 110px;
+    left: 165px;
+}
+
 .modal-gallery {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
