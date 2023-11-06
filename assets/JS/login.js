@@ -29,7 +29,7 @@ const login = async () => {
 
     // Traitement de la réponse du serveur
     const resultat = await response.json();
-
+    
     // Sélection des éléments d'affichage
     const pErr = document.querySelector('.erreur');
     const pValidate = document.querySelector(".validate");

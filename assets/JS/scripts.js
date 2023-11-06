@@ -82,8 +82,18 @@ function filterData(category) {
   renderData(filteredData);
 }
 
-// Fonction pour créer la galerie modale avec les données spécifiées
-function createGallery(data) {
+// Ajoute des écouteurs d'événements de clic pour les différents filtres
+filterAllWorks.addEventListener('click', () => renderData(data)); // Affiche tous les travaux
+filterObjectsWorks.addEventListener('click', () => filterData("Objets")); // Filtre les travaux de type "Objets"
+filterFlatWorks.addEventListener('click', () => filterData("Appartements")); // Filtre les travaux de type "Appartements"
+filterHotelAndRestaurantWorks.addEventListener('click', () => filterData("Hotels & restaurants")); // Filtre les travaux de type "Hotels & restaurants"
+
+    ////////////////////////////////////////////////////////////////////
+    // SECTION : 3- CRÉATION ET SUPPRESSION D'ÉLÉMENTS ////////////////
+    //////////////////////////////////////////////////////////////////
+
+    // Fonction pour créer la galerie modale avec les données spécifiées
+  function createGallery(data) {
   const modalGallery = document.querySelector(".modal-gallery");
   modalGallery.innerHTML = "";
 
@@ -97,10 +107,6 @@ function createGallery(data) {
       <img src="${item.imageUrl}" alt="">
     `;
     modalGallery.appendChild(figure); // Ajoute l'élément figure à la galerie modale
-
-    ///////////////////////////////////////////////////////////////////
-    // SECTION : 3- CRÉATION ET SUPPRESSION D'ÉLÉMENTS ////////////////
-    //////////////////////////////////////////////////////////////////
     
     const trashIcon = figure.querySelector(".trash"); // Sélection de l'icône de suppression
     trashIcon.addEventListener("click", async () => {
@@ -258,12 +264,6 @@ editButton.addEventListener("click", () => {
   modalContainer.style.display = "block";
   overlayEl.style.display = "block";
 });
-
-// Ajoute des écouteurs d'événements de clic pour les différents éléments
-filterAllWorks.addEventListener('click', () => renderData(data)); // Affiche tous les travaux
-filterObjectsWorks.addEventListener('click', () => filterData("Objets")); // Filtre les travaux de type "Objets"
-filterFlatWorks.addEventListener('click', () => filterData("Appartements")); // Filtre les travaux de type "Appartements"
-filterHotelAndRestaurantWorks.addEventListener('click', () => filterData("Hotels & restaurants")); // Filtre les travaux de type "Hotels & restaurants"
 
 // Fonction pour rafraîchir la page de l'administrateur
 function refreshPageAdmin(token) {
